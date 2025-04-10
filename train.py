@@ -14,11 +14,11 @@ import matplotlib.pyplot as plt
 from custom_callback import MetricsLoggerCallback  # ✅ Import custom callback
 
 # === Split dataset if not already done ===
-if not os.path.exists("D:/archive/Small/SL/train"):
-    split_dataset("D:/archive/Small/SL", "D:/archive/Small/SL")
+if not os.path.exists("D:/archive/dataset_split1/SL/train"):
+    split_dataset("D:/archive/dataset_split1/SL", "D:/archive/dataset_split1/SL")
 
 # === Generate label maps ===
-labels = sorted(os.listdir("D:/archive/Small/SL/train"))
+labels = sorted(os.listdir("D:/archive/dataset_split1/SL/train"))
 label2id = {label: i for i, label in enumerate(labels)}
 id2label = {i: label for label, i in label2id.items()}
 
@@ -42,8 +42,8 @@ model = VideoMAEForVideoClassification.from_pretrained(
 resize_to = processor.size.get("shortest_edge", 224)
 train_transform = get_transforms(resize_to)
 val_transform = get_transforms(resize_to)
-train_dataset = SignLanguageDataset("D:/archive/Small/SL/train", label2id, train_transform)
-val_dataset = SignLanguageDataset("D:/archive/Small/SL/val", label2id, val_transform)
+train_dataset = SignLanguageDataset("D:/archive/dataset_split1/SL/train", label2id, train_transform)
+val_dataset = SignLanguageDataset("D:/archive/dataset_split1/SL/val", label2id, val_transform)
 
 # === Metric ===
 metric = evaluate.load("accuracy")
@@ -88,7 +88,7 @@ trainer = Trainer(
 
 # === Train ===
 print(f"🚀 Starting training for {args.num_train_epochs} epochs...")
-with tf.device('/GPU:0'):
+with tf.device('/GPU:1'):
     train_results = trainer.train()
 model.save_pretrained(output_dir)
 processor.save_pretrained(output_dir)
