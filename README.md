@@ -4,12 +4,6 @@ This project implements **real-time American Sign Language (ASL) recognition** u
 
 ---
 
-## 🚀 Demo
-
-Check out the demo video here (Add link if available)
-
----
-
 ## 📂 Project Overview
 
 - ✅ **Goal**: Recognize ASL signs from video clips and convert them into grammatically corrected text.
